@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Memory Game — JohnM</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body ondragstart="return false;" ondrop="return false;">
+    <div class="hideAfterLoad">
+      <h1>Textures</h1>
+      <button id="button">Begin New Game</button>
+    </div>
+    <div id="gameInfo" class="hidden">
+      <h1 id="scorePrintout">You want the lowest score!</h1>
+    </div>
+    <section class="hidden" id="gameBoard"></section>
+    <div id="footer" class="hidden">
+      <h2 id="bestScore"></h2>
+      <button id="newButton" data-newgame-button="true">Begin New Game</button>
+    </div>
+    <div id="winner"></div>
+  </body>
+  <script src="app.js"></script>
+</html>
