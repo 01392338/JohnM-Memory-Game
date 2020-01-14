@@ -3,7 +3,7 @@ const gameBoard = document.querySelector("#gameBoard");
 const gameInfo = document.querySelector("#gameInfo");
 const button = document.querySelector("#button");
 const startGameScreen = document.querySelector("div.hideAfterLoad");
-const bestScore = document.querySelector("#bestScore");
+let bestScorePrintout = document.querySelector("#bestScorePrintout");
 const newGame = document.querySelector("#newButton");
 const footer = document.querySelector("#footer");
 const newButton = document.querySelector("#newButton");
@@ -24,30 +24,38 @@ shuffle2();
 
 function shuffle1() {
   randomizeImageNumbers1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  for (let i = randomizeImageNumbers1.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [randomizeImageNumbers1[i], randomizeImageNumbers1[j]] = [
-      randomizeImageNumbers1[j],
-      randomizeImageNumbers1[i]
-    ];
-  }
+  // for (let i = randomizeImageNumbers1.length - 1; i > 0; i--) {
+  //   let j = Math.floor(Math.random() * (i + 1));
+  //   [randomizeImageNumbers1[i], randomizeImageNumbers1[j]] = [
+  //     randomizeImageNumbers1[j],
+  //     randomizeImageNumbers1[i]
+  //   ];
+  // }
 }
 
 function shuffle2() {
   randomizeImageNumbers2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  for (let i = randomizeImageNumbers2.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [randomizeImageNumbers2[i], randomizeImageNumbers2[j]] = [
-      randomizeImageNumbers2[j],
-      randomizeImageNumbers2[i]
-    ];
-  }
+  // for (let i = randomizeImageNumbers2.length - 1; i > 0; i--) {
+  //   let j = Math.floor(Math.random() * (i + 1));
+  //   [randomizeImageNumbers2[i], randomizeImageNumbers2[j]] = [
+  //     randomizeImageNumbers2[j],
+  //     randomizeImageNumbers2[i]
+  //   ];
+  // }
 }
 
 //checks to see if there is a best score in local storage
-if (localStorage.bestScore) {
-  bestScoreNum = JSON.parse(localStorage.bestScore);
-} else bestScoreNum = "not yet established";
+if (localStorage.bestScore && localStorage.bestScore !== '-1') {
+  bestScoreNum = localStorage.bestScore;
+  bestScorePrintout.innerText = bestScoreNum;
+  console.log("local stroage true");
+} else {  
+    bestScoreNum = "not yet established";
+    localStorage.setItem("bestScore", -1);
+  console.log("local stroage else loop");
+}
+
+
 
 //starting the game via a button press on the start screen
 button.addEventListener("click", function() {
@@ -55,8 +63,9 @@ button.addEventListener("click", function() {
   gameBoard.classList.remove("hidden");
   gameInfo.classList.remove("hidden");
   footer.classList.remove("hidden");
-  bestScore.innerHTML = `Your Best Score Was ${bestScoreNum}`;
+  bestScorePrintout.innerText = `Your Best Score Was ${bestScoreNum}`;
 });
+
 
 //this is the new game button that appears on the game play area
 newButton.addEventListener("click", function() {
@@ -156,8 +165,9 @@ function checkIfHighScore() {
       gameBoard.remove();
       winner.innerHTML = "Awesome!";
     }, 800);
-    if (tileTurnovers < JSON.parse(localStorage.bestScore)) {
-      localStorage.setItem("bestScore", JSON.stringify(tileTurnovers));
+    if (tileTurnovers < (localStorage.bestScore) * -10000) {
+      bestScorePrintout.innerText = `Your Best Score Was ${tileTurnovers}`;
+      localStorage.setItem("bestScore", tileTurnovers);
     }
   }
 }
